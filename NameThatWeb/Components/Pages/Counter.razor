@@ -1,19 +1,38 @@
 ﻿@page "/counter"
 @rendermode InteractiveServer
 
-<PageTitle>Counter</PageTitle>
+<h3>Guess the Fish</h3>
 
-<h1>Counter</h1>
+<img src="images/piggvar.jpg" alt="Fish Image" style="width: 300px; height: auto;" />
 
-<p role="status">Current count: @currentCount</p>
+<p>Select the correct name for the fish below:</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+@if (isCorrect != null)
+{
+    <p>@(isCorrect == true ? "Correct!" : "Wrong, try again!")</p>
+}
+
+<div>
+    @foreach (var option in options)
+    {
+        <button @onclick="() => CheckAnswer(option)">@option</button>
+    }
+</div>
 
 @code {
-    private int currentCount = 0;
+    private string correctAnswer = "Piggvar";
+    private string[] options = { "Piggvar", "Laks", "Torsk", "Rødspætte", "Helleflynder" };
+    private bool? isCorrect = null;
 
-    private void IncrementCount()
+    private void CheckAnswer(string selectedOption)
     {
-        currentCount++;
+        if (selectedOption == correctAnswer)
+        {
+            isCorrect = true;
+        }
+        else
+        {
+            isCorrect = false;
+        }
     }
 }

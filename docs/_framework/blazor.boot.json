@@ -1,7 +1,7 @@
 {
-  "mainAssemblyName": "NameThatWeb2",
+  "mainAssemblyName": "WebApp",
   "resources": {
-    "hash": "sha256-/I1jn61yGTfro4gUZQMaLaor/WuvSMvl8ur+otVNUac=",
+    "hash": "sha256-1vQ8TeDhHpwb9D6oSZdWAEXdKoqqhIuw1079BwjgMxg=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.wueen79jk4.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -31,7 +31,6 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-6187ynEahDlSLMBvD4vAmiLpZ3clRb5xu6rM7O8AxNo=",
       "Microsoft.JSInterop.wasm": "sha256-YAuov+N9Jt7hvJRt9QsxNvhTGrzE64Y3sfAZ6hP1Z/A=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-sLSiCKh0RQEV/2cl05tr7wOLWzExQfPZovvpqYLJduQ=",
-      "NameThatWeb2.wasm": "sha256-bVvma/SzfbbPNLrhgHOAfnmsMQGYE7supDhBUUin3w4=",
       "System.Collections.Concurrent.wasm": "sha256-NVEciweq4C45AijA3PT3fpwPDZ/4qnRVDko7sjqMGcc=",
       "System.Collections.wasm": "sha256-Dc66R2V3ftbmN12nax7ASGIz86FEVQbYzaMDtmJ37kc=",
       "System.ComponentModel.wasm": "sha256-GPAg/lqvtlGqfal3j6EPgQ+6mqlusQ30qCeS8LYv8ws=",
@@ -48,7 +47,8 @@
       "System.Runtime.wasm": "sha256-THT/BuJsHB4pa1dl3FJexIhrqp25GK0z2dYzXpqCdPs=",
       "System.Text.Encodings.Web.wasm": "sha256-MCv+5sGwYGikJ8D76raGF6L+02exyJcFgx2sVlUjmKk=",
       "System.Text.Json.wasm": "sha256-06a/d+2j+pqKjp9lLbyGYATd8HXETVninZtFk3HGSHE=",
-      "System.Text.RegularExpressions.wasm": "sha256-8bujMNUMCuxn48zxE7AA6YYcbZJjv76LHEAtNjS6TuE="
+      "System.Text.RegularExpressions.wasm": "sha256-8bujMNUMCuxn48zxE7AA6YYcbZJjv76LHEAtNjS6TuE=",
+      "WebApp.wasm": "sha256-bMNzEWXGFiH7PEwDMnoJyc1HZ1m0vSj2p/p/IYUgpnY="
     }
   },
   "cacheBootResources": true,

@@ -9,7 +9,7 @@
     @if (isCorrect != null)
     {
         <p class="result-text @(isCorrect == true ? "correct" : "wrong")">
-            @(isCorrect == true ? "Correct!" : "Wrong, try again!")
+            @(isCorrect == true ? "Korrekt!" : "Forkert!")
         </p>
     }
 
@@ -124,7 +124,9 @@
         ("laks.jpg", "Laks"),
         ("torsk.jpg", "Torsk"),
         ("rødspætte.jpg", "Rødspætte"),
-        ("havørred.jpg", "Havørred")
+        ("havørred.jpg", "Havørred"),
+        ("regnbueørred.jpg", "Regnbueørred"),
+        ("makrel.jpg", "Makrel")
     };
 
     protected override void OnInitialized()
@@ -145,19 +147,39 @@
     private void ChangeFish()
     {
         var random = new Random();
-        var selectedFish = fishData[random.Next(fishData.Count)];
-        fishImage = selectedFish.Image;
-        correctAnswer = selectedFish.Answer;
 
-        // Generate options dynamically
-        options = fishData
-            .Select(f => f.Answer)
-            .OrderBy(_ => random.Next())
-            .ToArray();
+        // Select a random fish
+        var selectedFish = this.fishData[random.Next(this.fishData.Count)];
+        this.fishImage = selectedFish.Image;
+        this.correctAnswer = selectedFish.Answer;
+
+        // Initialize options array
+        this.options = new string[5];
+        var allAnswersArray = this.fishData.Select(f => f.Answer).ToArray();
+
+        // Set the correct answer at a random position in the options array
+        int correctAnswerIndex = random.Next(this.options.Length);
+        this.options[correctAnswerIndex] = this.correctAnswer;
+
+        // Fill the rest of the options array with random answers
+        for (int i = 0; i < this.options.Length; i++)
+        {
+            if (i == correctAnswerIndex) continue;
+
+            string randomAnswer;
+            do
+            {
+                randomAnswer = allAnswersArray[random.Next(allAnswersArray.Length)];
+            }
+            while (randomAnswer.Equals(this.correctAnswer, StringComparison.OrdinalIgnoreCase) ||
+                   this.options.Contains(randomAnswer, StringComparer.OrdinalIgnoreCase));
+
+            this.options[i] = randomAnswer;
+        }
 
         isCorrect = null;
-
         StateHasChanged();
     }
+
 }
 

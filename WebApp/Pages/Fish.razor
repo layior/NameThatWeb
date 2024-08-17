@@ -1,0 +1,72 @@
+﻿@page "/fish"
+
+<h2>Guess the Fish</h2>
+
+<div style="text-align: center; margin-bottom: 20px;">
+    <img src="@fishImage" alt="Fish Image" style="width: 300px; height: auto; border: 2px solid #ccc; border-radius: 8px;" />
+</div>
+
+<p>Select the correct name for the fish below:</p>
+
+@if (isCorrect != null)
+{
+    <p style="font-weight: bold; color: @(isCorrect == true ? "green" : "red");">
+        @(isCorrect == true ? "Correct!" : "Wrong, try again!")
+    </p>
+}
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+    @foreach (var option in options)
+    {
+        <button @onclick="() => CheckAnswer(option)" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: aquamarine;">
+            @option
+        </button>
+    }
+</div>
+
+@code {
+    private string correctAnswer;
+    private string fishImage;
+    private string[] options;
+    private bool? isCorrect = null;
+
+    private List<(string Image, string Answer, string[] Options)> fishData = new List<(string, string, string[])>
+    {
+        ("piggvar.jpg", "Piggvar", new[] { "Piggvar", "Laks", "Torsk", "Rødspætte", "Havørred" }),
+        ("laks.jpg", "Laks", new[] { "Laks", "Torsk", "Piggvar", "Havørred", "Rødspætte" }),
+        ("torsk.jpg", "Torsk", new[] { "Torsk", "Piggvar", "Rødspætte", "Laks", "Havørred" }),
+        ("rødspætte.jpg", "Rødspætte", new[] { "Rødspætte", "Piggvar", "Torsk", "Havørred", "Laks" }),
+        ("havørred.jpg", "Havørred", new[] { "Havørred", "Piggvar", "Rødspætte", "Laks", "Torsk" })
+    };
+
+    protected override void OnInitialized()
+    {
+        ChangeFish();
+    }
+
+    private async Task CheckAnswer(string selectedOption)
+    {
+        isCorrect = selectedOption == correctAnswer;
+        // Force the component to re-render after setting isCorrect
+        StateHasChanged();
+
+        // Wait for 2 seconds
+        await Task.Delay(2000);
+
+        // Change the fish after the delay
+        ChangeFish();
+    }
+
+    private void ChangeFish()
+    {
+        var random = new Random();
+        var selectedFish = fishData[random.Next(fishData.Count)];
+        fishImage = selectedFish.Image;
+        correctAnswer = selectedFish.Answer;
+        options = selectedFish.Options;
+        isCorrect = null;
+
+        // Ensure the UI updates after the fish is changed
+        StateHasChanged();
+    }
+}

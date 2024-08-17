@@ -1,28 +1,119 @@
 ﻿@page "/fish"
 
-<h2>Guess the Fish</h2>
+<div class="fish-game-container">
+    <h2 class="game-title">Guess the Fish</h2>
 
-<div style="text-align: center; margin-bottom: 20px;">
-    <img src="@fishImage" alt="Fish Image" style="width: 300px; height: auto; border: 2px solid #ccc; border-radius: 8px;" />
-</div>
+    <div class="fish-image-container">
+        <img src="@fishImage" alt="Fish Image" class="fish-image" />
+    </div>
 
-<p>Select the correct name for the fish below:</p>
+    <p class="instruction-text">Select the correct name for the fish below:</p>
 
-@if (isCorrect != null)
-{
-    <p style="font-weight: bold; color: @(isCorrect == true ? "green" : "red");">
-        @(isCorrect == true ? "Correct!" : "Wrong, try again!")
-    </p>
-}
-
-<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
-    @foreach (var option in options)
+    @if (isCorrect != null)
     {
-        <button @onclick="() => CheckAnswer(option)" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: aquamarine;">
-            @option
-        </button>
+        <p class="result-text @(isCorrect == true ? "correct" : "wrong")">
+            @(isCorrect == true ? "Correct!" : "Wrong, try again!")
+        </p>
     }
+
+    <div class="options-container">
+        @foreach (var option in options)
+        {
+            <button @onclick="() => CheckAnswer(option)" class="option-button">
+                @option
+            </button>
+        }
+    </div>
 </div>
+
+<style>
+    .fish-game-container {
+        max-width: 100%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .game-title {
+        font-size: 1.8em;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .fish-image-container {
+        margin-bottom: 20px;
+    }
+
+    .fish-image {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        border-radius: 12px;
+        border: 3px solid #eee;
+    }
+
+    .instruction-text {
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .result-text {
+        font-weight: bold;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+        .result-text.correct {
+            color: green;
+        }
+
+        .result-text.wrong {
+            color: red;
+        }
+
+    .options-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .option-button {
+        flex: 1 1 calc(100% - 20px);
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: aquamarine;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-sizing: border-box;
+    }
+
+        .option-button:hover {
+            background-color: #78dcca;
+        }
+
+    /* This ensures that the buttons adjust their size naturally without media queries */
+    .option-button {
+        flex: 1 1 100%; /* By default, buttons take full width on small screens */
+    }
+
+    .options-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .option-button {
+        flex: 1 1 48%; /* Buttons will take nearly half the width on larger screens, with gap accounting for spacing */
+        margin: 5px; /* Provides spacing between buttons */
+    }
+</style>
 
 @code {
     private string correctAnswer;
@@ -47,13 +138,10 @@
     private async Task CheckAnswer(string selectedOption)
     {
         isCorrect = selectedOption == correctAnswer;
-        // Force the component to re-render after setting isCorrect
         StateHasChanged();
 
-        // Wait for 2 seconds
         await Task.Delay(2000);
 
-        // Change the fish after the delay
         ChangeFish();
     }
 
@@ -66,7 +154,6 @@
         options = selectedFish.Options;
         isCorrect = null;
 
-        // Ensure the UI updates after the fish is changed
         StateHasChanged();
     }
 }

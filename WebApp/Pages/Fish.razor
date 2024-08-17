@@ -1,13 +1,10 @@
 ﻿@page "/fish"
 
 <div class="fish-game-container">
-    <h2 class="game-title">Guess the Fish</h2>
 
     <div class="fish-image-container">
         <img src="@fishImage" alt="Fish Image" class="fish-image" />
     </div>
-
-    <p class="instruction-text">Select the correct name for the fish below:</p>
 
     @if (isCorrect != null)
     {
@@ -114,20 +111,20 @@
         margin: 5px; /* Provides spacing between buttons */
     }
 </style>
-
 @code {
     private string correctAnswer;
     private string fishImage;
     private string[] options;
     private bool? isCorrect = null;
 
-    private List<(string Image, string Answer, string[] Options)> fishData = new List<(string, string, string[])>
+    // Simplified data with only image and correct answer
+    private List<(string Image, string Answer)> fishData = new List<(string Image, string Answer)>
     {
-        ("piggvar.jpg", "Piggvar", new[] { "Piggvar", "Laks", "Torsk", "Rødspætte", "Havørred" }),
-        ("laks.jpg", "Laks", new[] { "Laks", "Torsk", "Piggvar", "Havørred", "Rødspætte" }),
-        ("torsk.jpg", "Torsk", new[] { "Torsk", "Piggvar", "Rødspætte", "Laks", "Havørred" }),
-        ("rødspætte.jpg", "Rødspætte", new[] { "Rødspætte", "Piggvar", "Torsk", "Havørred", "Laks" }),
-        ("havørred.jpg", "Havørred", new[] { "Havørred", "Piggvar", "Rødspætte", "Laks", "Torsk" })
+        ("piggvar.jpg", "Piggvar"),
+        ("laks.jpg", "Laks"),
+        ("torsk.jpg", "Torsk"),
+        ("rødspætte.jpg", "Rødspætte"),
+        ("havørred.jpg", "Havørred")
     };
 
     protected override void OnInitialized()
@@ -151,9 +148,16 @@
         var selectedFish = fishData[random.Next(fishData.Count)];
         fishImage = selectedFish.Image;
         correctAnswer = selectedFish.Answer;
-        options = selectedFish.Options;
+
+        // Generate options dynamically
+        options = fishData
+            .Select(f => f.Answer)
+            .OrderBy(_ => random.Next())
+            .ToArray();
+
         isCorrect = null;
 
         StateHasChanged();
     }
 }
+

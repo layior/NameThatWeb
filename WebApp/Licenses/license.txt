@@ -1,0 +1,4 @@
+picture_aborre1: https://commons.wikimedia.org/wiki/File:Peflu_u0.gif#file
+picture_brasen1: https://commons.wikimedia.org/wiki/File:Abramis_brama_Prague_Vltava_1.jpg
+picture_bækørred1: https://commons.wikimedia.org/wiki/File:EastGallatinRiverBrownTrout.jpg
+picture_fjæsing1: https://commons.wikimedia.org/wiki/File:Trachinus_draco_Stefano_Guerrieri_(cropped).jpg
